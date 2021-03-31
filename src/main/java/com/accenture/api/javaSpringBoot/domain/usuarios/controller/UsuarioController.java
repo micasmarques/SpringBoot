@@ -62,13 +62,14 @@ public class UsuarioController {
     }
 
 //    @RequestMapping(value = "/usuarios/{login}-{senha}", method = RequestMethod.GET)
-//    public @ResponseBody ResponseEntity<String> findByLoginAndSenha(@PathVariable String login, @PathVariable String senha){
+//    public @ResponseBody ResponseEntity<String> findByLoginAndSenha(@PathVariable String loginAndSenha){
 //        List<Usuario> usersList = acoes.findAll();
+//        String[] logAndSen = loginAndSenha.split("-");
 //        @NotNull
 //        Usuario usuario = new Usuario();
 //        String msg = "";
 //        for (Usuario user: usersList) {
-//            if((user.getLogin()).equals(login) && (user.getSenha()).equals(senha))
+//            if((user.getLogin()).equals(logAndSen[0]) && (user.getSenha()).equals(logAndSen[1]))
 //                usuario = user;
 //        }
 //        if (usuario.getStatus().equals("C")) msg = "Usuario está inativado no sistema";

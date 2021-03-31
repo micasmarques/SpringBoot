@@ -1,9 +1,10 @@
 package com.accenture.api.javaSpringBoot.domain.livroCaixa.controller;
 
-import com.accenture.api.javaSpringBoot.domain.respostaDelete.ResponseDell;
 import com.accenture.api.javaSpringBoot.domain.clientes.domain.Cliente;
-import com.accenture.api.javaSpringBoot.domain.livroCaixa.domain.LivroCaixa;
 import com.accenture.api.javaSpringBoot.domain.livroCaixa.DTO.LivroCaixaDTO;
+import com.accenture.api.javaSpringBoot.domain.livroCaixa.comparator.CompareByIDCliente;
+import com.accenture.api.javaSpringBoot.domain.livroCaixa.domain.LivroCaixa;
+import com.accenture.api.javaSpringBoot.domain.respostaDelete.ResponseDell;
 import com.accenture.api.javaSpringBoot.repository.ClienteRepository;
 import com.accenture.api.javaSpringBoot.repository.LivroCaixaRepository;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class LivroCaixaController {
     private final LivroCaixaRepository livroCaixaRepository;
     private final ClienteRepository clienteRepository;
+    private final CompareByIDCliente compare = new CompareByIDCliente();
 
 
     public LivroCaixaController(LivroCaixaRepository livroCaixaRepository, ClienteRepository clienteRepository) {
@@ -57,8 +59,7 @@ public class LivroCaixaController {
 
     //deletar produtos
     @RequestMapping(value = "/livroCaixa/{codigo}", method = RequestMethod.DELETE)
-    public @ResponseBody
-    ResponseDell deletar(@PathVariable Integer codigo){
+    public @ResponseBody ResponseDell deletar(@PathVariable Integer codigo){
         ResponseDell response = new ResponseDell();
         try{
             LivroCaixa livroCaixa = filtrar(codigo).
@@ -71,22 +72,10 @@ public class LivroCaixaController {
         return response;
     }
 
-    // ordenando por email / Codigo = 0
-    // ordenanod por nome / codigo = 1
-//    @RequestMapping(value = "/livroCaixa/order/{codigo}", method = RequestMethod.GET)
-//    public @ResponseBody List<? extends Object> filterBy(@PathVariable String codigo){
-//        List<Usuario> lista = this.listar();
-//        switch (codigo) {
-//            case "email":
-//                Collections.sort(lista, new CompareUsersByEmail());
-//                return lista;
-//            case "nome":
-//                Collections.sort(lista, new CompareUsersByNome());
-//                return lista;
-//            default:
-//                List<String> list = null;
-//                list.add("Filtro invalido. Tente novamente");
-//                return list;
-//        }
-//    }
+    @RequestMapping(value = "/livroCaixa/order", method = RequestMethod.GET)
+    public @ResponseBody List<LivroCaixa> filterBy(){
+        List<LivroCaixa> lista = this.listar();
+        lista.sort(compare);
+        return lista;
+    }
 }
