@@ -1,7 +1,6 @@
 package com.accenture.api.javaSpringBoot.domain.livroCaixa.comparator;
 
 import com.accenture.api.javaSpringBoot.domain.livroCaixa.domain.LivroCaixa;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
