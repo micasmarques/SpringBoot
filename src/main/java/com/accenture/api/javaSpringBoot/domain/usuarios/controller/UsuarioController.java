@@ -79,7 +79,7 @@ public class UsuarioController {
                     return ResponseEntity.ok().body("Usuario " + user.getNome() + " foi logado com sucesso");
                 }
             }
-        } return ResponseEntity.ok().body("Login ou senha invalido!");
+        } return ResponseEntity.ok().body("Login e/ou senha invalido!");
     }
 
     @RequestMapping(value = "/usuarios/order/{codigo}", method = RequestMethod.GET)
