@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,8 +44,8 @@ public class UsuarioController {
 
     //alterar produtos
     @RequestMapping(value = "/usuarios", method = RequestMethod.PUT)
-    public Usuario alterar(@PathVariable Usuario usuario) {
-        return acoes.save(usuario);
+    public Usuario alterar(@PathVariable Usuario user) {
+        return acoes.save(user);
     }
 
     //deletar produtos
@@ -61,21 +62,25 @@ public class UsuarioController {
         return response;
     }
 
-//    @RequestMapping(value = "/usuarios/{login}-{senha}", method = RequestMethod.GET)
-//    public @ResponseBody ResponseEntity<String> findByLoginAndSenha(@PathVariable String loginAndSenha){
-//        List<Usuario> usersList = acoes.findAll();
-//        String[] logAndSen = loginAndSenha.split("-");
-//        @NotNull
-//        Usuario usuario = new Usuario();
-//        String msg = "";
-//        for (Usuario user: usersList) {
-//            if((user.getLogin()).equals(logAndSen[0]) && (user.getSenha()).equals(logAndSen[1]))
-//                usuario = user;
-//        }
-//        if (usuario.getStatus().equals("C")) msg = "Usuario está inativado no sistema";
-//        else msg = "Usuario " + usuario.getNome() + "foi logado com sucesso.";
-//        return ResponseEntity.ok().body(msg);
-//    }
+    @RequestMapping(value = "/usuarios/{login}/{senha}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<String> findByLoginAndSenha(@PathVariable String login, @PathVariable String senha){
+        List<Usuario> usersList = acoes.findAll();
+        @NotNull
+        List<Usuario> userList = new ArrayList<>();
+        String msg = "";
+        for (Usuario user: usersList) {
+            if ((user.getLogin()).equals(login) && (user.getSenha()).equals(senha))
+                userList.add(user);
+            if (!userList.isEmpty()) {
+                if (user.getStatus().equals("C")) {
+                    msg = "Usuario inativado no sistema";
+                    return ResponseEntity.ok().body(msg);
+                } else {
+                    return ResponseEntity.ok().body("Usuario " + user.getNome() + " foi logado com sucesso");
+                }
+            }
+        } return ResponseEntity.ok().body("Login ou senha invalido!");
+    }
 
     @RequestMapping(value = "/usuarios/order/{codigo}", method = RequestMethod.GET)
     public @ResponseBody List<?> filterBy(@PathVariable String codigo) {
