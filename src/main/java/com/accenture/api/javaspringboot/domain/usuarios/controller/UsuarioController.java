@@ -6,9 +6,11 @@ import com.accenture.api.javaspringboot.domain.usuarios.comparator.CompareUsersB
 import com.accenture.api.javaspringboot.domain.usuarios.domain.Usuario;
 import com.accenture.api.javaspringboot.domain.usuarios.services.UsuarioService;
 import com.accenture.api.javaspringboot.repository.UsuarioRepository;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -82,5 +84,10 @@ public class UsuarioController {
             default:
                 return lista;
         }
+    }
+
+    @GetMapping("/report/{format}")
+    public String generateReport(@PathVariable String format) throws FileNotFoundException, JRException {
+        return usuarioService.exportReport(format);
     }
 }
