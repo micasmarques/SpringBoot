@@ -82,9 +82,7 @@ public class ClienteController {
                 Collections.sort(lista, new CompareByUF());
                 return lista;
             default:
-                List<String> list = null;
-                list.add("Filtro invalido. Tente novamente");
-                return list;
+                return lista;
         }
     }
 }

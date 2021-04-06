@@ -1,9 +1,9 @@
 package com.accenture.api.javaspringboot.domain.livrocaixa.controller;
 
 import com.accenture.api.javaspringboot.domain.clientes.domain.Cliente;
-import com.accenture.api.javaspringboot.domain.livrocaixa.dto.LivroCaixaDTO;
 import com.accenture.api.javaspringboot.domain.livrocaixa.comparator.CompareByIDCliente;
 import com.accenture.api.javaspringboot.domain.livrocaixa.domain.LivroCaixa;
+import com.accenture.api.javaspringboot.domain.livrocaixa.dto.LivroCaixaInsertAndUpdate;
 import com.accenture.api.javaspringboot.domain.respostaDelete.ResponseDell;
 import com.accenture.api.javaspringboot.repository.ClienteRepository;
 import com.accenture.api.javaspringboot.repository.LivroCaixaRepository;
@@ -27,17 +27,16 @@ public class LivroCaixaController {
     }
 
     // Listar Produtos
-    @RequestMapping(value = "/livroCaixa", method = RequestMethod.GET)
+    @GetMapping(value = "/livroCaixa")
     public @ResponseBody
     List<LivroCaixa> listar(){
         return livroCaixaRepository.findAll();
     }
 
     //cadastrar produtos
-    @RequestMapping(value = "/livroCaixa", method = RequestMethod.POST)
-    public @ResponseBody LivroCaixa cadastrar(@RequestBody LivroCaixa livroCaixa) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Cliente cli = clienteRepository.findById(livroCaixa.getCliente().getId()).orElseThrow(()->new RuntimeException("Registro não encontrado"));
+    @PostMapping (value = "/livroCaixa")
+    public @ResponseBody LivroCaixa cadastrar(@RequestBody LivroCaixaInsertAndUpdate livroCaixa) {
+        Cliente cli = clienteRepository.findById(livroCaixa.getCliente()).orElseThrow(()->new RuntimeException("Registro não encontrado"));
         LivroCaixa lc = new LivroCaixa(livroCaixa.getDataLancamento(),
                 livroCaixa.getDescricao(), livroCaixa.getTipo(),
                 livroCaixa.getValor(), cli);
@@ -45,19 +44,19 @@ public class LivroCaixaController {
     }
 
     //filtrar produtos
-    @RequestMapping(value = "/livroCaixa/{codigo}", method = RequestMethod.GET)
+    @GetMapping(value = "/livroCaixa/{codigo}")
     public @ResponseBody Optional<LivroCaixa> filtrar(@PathVariable Integer codigo){
         return livroCaixaRepository.findById(codigo);
     }
 
     //alterar produtos
-    @RequestMapping(value = "/livroCaixa", method = RequestMethod.PUT)
+    @PutMapping(value = "/livroCaixa")
     public @ResponseBody LivroCaixa alterar(@RequestBody LivroCaixa livroCaixa){
         return livroCaixaRepository.save(livroCaixa);
     }
 
     //deletar produtos
-    @RequestMapping(value = "/livroCaixa/{codigo}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/livroCaixa/{codigo}")
     public @ResponseBody ResponseDell deletar(@PathVariable Integer codigo){
         ResponseDell response = new ResponseDell();
         try{
@@ -71,7 +70,7 @@ public class LivroCaixaController {
         return response;
     }
 
-    @RequestMapping(value = "/livroCaixa/order", method = RequestMethod.GET)
+    @GetMapping(value = "/livroCaixa/order")
     public @ResponseBody List<LivroCaixa> filterBy(){
         List<LivroCaixa> lista = this.listar();
         lista.sort(compare);

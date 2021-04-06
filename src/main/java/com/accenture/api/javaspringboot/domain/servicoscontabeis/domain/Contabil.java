@@ -10,14 +10,14 @@ public class Contabil {
     private String nome;
     private String cpfCnpj;
     private String telefone;
-    private List<LivroCaixaDTO> contabilList = new ArrayList<>();
+    private List<LivroCaixaDTO> contabil = new ArrayList<>();
 
-    public Contabil(Integer id, String nome, String cpfCnpj, String telefone, List<LivroCaixaDTO> contabilList) {
+    public Contabil(Integer id, String nome, String cpfCnpj, String telefone, List<LivroCaixaDTO> contabil) {
         this.id = id;
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
         this.telefone = telefone;
-        this.contabilList = contabilList;
+        this.contabil = contabil;
     }
 
     public Contabil() {
@@ -59,12 +59,12 @@ public class Contabil {
         return this;
     }
 
-    public List<LivroCaixaDTO> getContabilList() {
-        return contabilList;
+    public List<LivroCaixaDTO> getContabil() {
+        return contabil;
     }
 
-    public Contabil setContabilList(List<LivroCaixaDTO> contabilList) {
-        this.contabilList = contabilList;
+    public Contabil setContabil(List<LivroCaixaDTO> contabil) {
+        this.contabil = contabil;
         return this;
     }
 }

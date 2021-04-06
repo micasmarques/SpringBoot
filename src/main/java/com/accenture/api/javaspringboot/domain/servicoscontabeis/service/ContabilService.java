@@ -6,20 +6,22 @@ import com.accenture.api.javaspringboot.domain.livrocaixa.dto.LivroCaixaDTO;
 import com.accenture.api.javaspringboot.domain.servicoscontabeis.dto.ContabilDTO;
 import com.accenture.api.javaspringboot.repository.ClienteRepository;
 import com.accenture.api.javaspringboot.repository.LivroCaixaRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ContabilService {
-    @Autowired
-    private LivroCaixaRepository lcr;
+    private final LivroCaixaRepository lcr;
     private final ClienteRepository cr;
 
-    public ContabilService(ClienteRepository cr) {
+    public ContabilService(ClienteRepository cr, LivroCaixaRepository lcr) {
         this.cr = cr;
+        this.lcr = lcr;
     }
 
     public ContabilDTO contabilById(int id){
@@ -27,6 +29,19 @@ public class ContabilService {
         Cliente cliente = cr.findById(id).
                 orElseThrow(()->new RuntimeException("Cliente não encontrado"));
         List<LivroCaixa> livroCaixaList = lcr.findByClienteId(cliente.getId());
+        return getContabilDTO(filtro, cliente, livroCaixaList);
+    }
+
+    public ContabilDTO contabilByIdAndDate(int id, Date inicio, Date fim){
+        ContabilDTO filtro = new ContabilDTO();
+        Cliente cliente = cr.findById(id).
+                orElseThrow(()->new RuntimeException("Cliente não encontrado"));
+        List<LivroCaixa> livroCaixaList = lcr.findByDataLancamentoBetweenAndClienteId(inicio, fim, cliente.getId());
+        return getContabilDTO(filtro, cliente, livroCaixaList);
+    }
+
+    @NotNull
+    private ContabilDTO getContabilDTO(ContabilDTO filtro, Cliente cliente, List<LivroCaixa> livroCaixaList) {
         filtro.setId(cliente.getId());
         filtro.setNome(cliente.getNome());
         filtro.setCpfCnpj(cliente.getCpfCnpj());
@@ -34,7 +49,7 @@ public class ContabilService {
         List<LivroCaixaDTO> livroCaixaDTOS = fromLivroCaixaDTO(livroCaixaList);
 
         for(LivroCaixaDTO lv: livroCaixaDTOS){
-            filtro.getContabilList().add(lv);
+            filtro.getContabil().add(lv);
         }
         return filtro;
     }

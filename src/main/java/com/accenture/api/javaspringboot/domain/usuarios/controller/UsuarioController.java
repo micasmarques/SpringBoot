@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@RestController
+@RequestMapping("/api")
 public class UsuarioController {
     private final UsuarioRepository acoes;
-
     private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioRepository acoes, UsuarioService usuarioService) {
@@ -29,7 +30,7 @@ public class UsuarioController {
     }
 
 //    cadastrar produtos
-    @GetMapping(value = "/usuarios")
+    @PostMapping(value = "/usuarios")
     public @ResponseBody Usuario cadastrar(@RequestBody Usuario usuario){
         usuario.setDataCadastro(LocalDate.now());
         return acoes.save(usuario);
@@ -44,7 +45,7 @@ public class UsuarioController {
 
     //alterar produtos
     @PutMapping(value = "/usuarios")
-    public Usuario alterar(@PathVariable Usuario user) {
+    public Usuario alterar(@RequestBody Usuario user) {
         return acoes.save(user);
     }
 
@@ -61,8 +62,6 @@ public class UsuarioController {
         }
         return response;
     }
-
-
 
     @RequestMapping("/login")
     public ResponseEntity<String> login(@RequestParam(value = "login") String login, @RequestParam(value = "senha") String senha){

@@ -39,6 +39,34 @@ public class Cliente {
     @Column(name = "EMAIL")
     private String email;
 
+    public Cliente() {
+    }
+
+    public Cliente(Integer id, LocalDate dataCadastro, String nome, String cpfCnpj, String logradouro, String cidade, String uf, String cep, String email) {
+        this.id = id;
+        this.dataCadastro = dataCadastro;
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.logradouro = logradouro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+        this.email = email;
+    }
+
+    public Cliente(Integer id, LocalDate dataCadastro, String nome, String cpfCnpj, String logradouro, String cidade, String uf, String cep, String telefone, String email) {
+        this.id = id;
+        this.dataCadastro = dataCadastro;
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.logradouro = logradouro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
     public Integer getId() {
         return id;
     }

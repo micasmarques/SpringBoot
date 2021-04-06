@@ -1,51 +1,25 @@
-package com.accenture.api.javaspringboot.domain.livrocaixa.domain;
+package com.accenture.api.javaspringboot.domain.livrocaixa.dto;
 
 import com.accenture.api.javaspringboot.domain.clientes.domain.Cliente;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "LivroCaixa")
-public class LivroCaixa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    @JsonIgnore
+public class LivroCaixaInsertAndUpdate {
     private int id;
-
-    @Column(name = "Data_Lancamento", nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataLancamento;
-
-    @Column(name = "Descricao", nullable = false)
     private String descricao;
-
-    @Column(name = "Tipo", nullable = false)
     private String tipo;
-
-    @Column(name = "Valor",nullable = false)
     private float valor;
+    private int cliente;
 
-    @ManyToOne
-    @JsonIgnore
-    private Cliente cliente;
-
-    public LivroCaixa() {
+    public LivroCaixaInsertAndUpdate() {
     }
 
-    public LivroCaixa(int id, Date dataLancamento, String descricao, String tipo, float valor) {
-        this.id = id;
-        this.dataLancamento = dataLancamento;
-        this.descricao = descricao;
-        this.tipo = tipo;
-        this.valor = valor;
-    }
-
-    public LivroCaixa(Date dataLancamento, String descricao, String tipo, float valor, Cliente cliente) {
+    public LivroCaixaInsertAndUpdate(Date dataLancamento, String descricao, String tipo, float valor, int cliente) {
         this.dataLancamento = dataLancamento;
         this.descricao = descricao;
         this.tipo = tipo;
@@ -53,7 +27,7 @@ public class LivroCaixa {
         this.cliente = cliente;
     }
 
-    public LivroCaixa(int id, Date dataLancamento, String descricao, String tipo, float valor, Cliente cliente) {
+    public LivroCaixaInsertAndUpdate(int id, Date dataLancamento, String descricao, String tipo, float valor, int cliente) {
         this.id = id;
         this.dataLancamento = dataLancamento;
         this.descricao = descricao;
@@ -66,7 +40,7 @@ public class LivroCaixa {
         return id;
     }
 
-    public LivroCaixa setId(int id) {
+    public LivroCaixaInsertAndUpdate setId(int id) {
         this.id = id;
         return this;
     }
@@ -75,7 +49,7 @@ public class LivroCaixa {
         return dataLancamento;
     }
 
-    public LivroCaixa setDataLancamento(Date dataLancamento) {
+    public LivroCaixaInsertAndUpdate setDataLancamento(Date dataLancamento) {
         this.dataLancamento = dataLancamento;
         return this;
     }
@@ -84,7 +58,7 @@ public class LivroCaixa {
         return descricao;
     }
 
-    public LivroCaixa setDescricao(String descricao) {
+    public LivroCaixaInsertAndUpdate setDescricao(String descricao) {
         this.descricao = descricao;
         return this;
     }
@@ -93,7 +67,7 @@ public class LivroCaixa {
         return tipo;
     }
 
-    public LivroCaixa setTipo(String tipo) {
+    public LivroCaixaInsertAndUpdate setTipo(String tipo) {
         this.tipo = tipo;
         return this;
     }
@@ -102,16 +76,16 @@ public class LivroCaixa {
         return valor;
     }
 
-    public LivroCaixa setValor(float valor) {
+    public LivroCaixaInsertAndUpdate setValor(float valor) {
         this.valor = valor;
         return this;
     }
 
-    public Cliente getCliente() {
+    public int getCliente() {
         return cliente;
     }
 
-    public LivroCaixa setCliente(Cliente cliente) {
+    public LivroCaixaInsertAndUpdate setCliente(int cliente) {
         this.cliente = cliente;
         return this;
     }
