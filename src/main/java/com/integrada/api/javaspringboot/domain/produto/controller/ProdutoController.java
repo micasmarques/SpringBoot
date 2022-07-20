@@ -20,32 +20,32 @@ public class ProdutoController extends Produto{
     }
 
     //     Listar Produtos
-    @GetMapping(value = "/produtos")
+    @GetMapping(value = "/produto")
     public List<Produto> listar() {
         return acoes.findAll();
     }
 
 //    cadastrar produtos
-    @PostMapping(value = "/produtos")
-    public @ResponseBody Usuario cadastrar(@RequestBody Usuario usuario){
-        return acoes.save(usuario);
+    @PostMapping(value = "/produto")
+    public @ResponseBody Produto cadastrar(@RequestBody Produto produto){
+        return acoes.save(produto);
     }
 
     //filtrar produtos
-    @GetMapping(value = "/produtos/{codigo}")
+    @GetMapping(value = "/produto/{codigo}")
     public Produto filtrar(@PathVariable Integer codigo) {
         return acoes.findById(codigo)
                 .orElseThrow(()->new RuntimeException("Produto não encontrado"));
     }
 
     //alterar produtos
-    @PutMapping(value = "/produtos")
+    @PutMapping(value = "/produto")
     public Produto alterar(@RequestBody Produto p) {
         return acoes.save(p);
     }
 
     //deletar produtos
-    @DeleteMapping(value = "/produtos/{codigo}")
+    @DeleteMapping(value = "/produto/{codigo}")
     public @ResponseBody ResponseDell deletar(@PathVariable Integer codigo) {
         ResponseDell response = new ResponseDell();
         try {
@@ -58,7 +58,7 @@ public class ProdutoController extends Produto{
         return response;
     }
 
-    @GetMapping(value = "/produtos/order/{codigo}")
+    @GetMapping(value = "/produto/order/{codigo}")
     public @ResponseBody List<Produto> filterBy(@PathVariable String codigo) {
         List<Produto> lista = this.listar();
         switch (codigo) {

@@ -20,11 +20,10 @@ public class Carrinho {
     @Setter
     private Integer id;
 
-    @Column(name = "PRODUTOS", nullable = false)
+    @Column(name = "PRODUTOS")
     @Getter
     @Setter
     @ManyToMany
-    @JoinTable(name="Produto",
-            joinColumns={@JoinColumn(name="ID")})
+    @JoinTable(name="Produto")
     private List<Produto> produtos;
 }

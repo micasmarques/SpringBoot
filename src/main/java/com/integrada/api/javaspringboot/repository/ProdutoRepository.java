@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
-    Produto findByLoginAndSenha(String login, String senha);
     Usuario save(Usuario user);
 }

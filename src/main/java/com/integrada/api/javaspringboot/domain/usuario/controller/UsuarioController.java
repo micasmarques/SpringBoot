@@ -6,6 +6,7 @@ import com.integrada.api.javaspringboot.domain.usuario.comparator.CompareUsersBy
 import com.integrada.api.javaspringboot.domain.usuario.domain.Usuario;
 import com.integrada.api.javaspringboot.domain.usuario.service.UsuarioService;
 import com.integrada.api.javaspringboot.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/api")
 public class UsuarioController {
+    @Autowired
     private final UsuarioRepository acoes;
+    @Autowired
     private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioRepository acoes, UsuarioService usuarioService) {
@@ -24,32 +27,32 @@ public class UsuarioController {
     }
 
     //     Listar Produtos
-    @GetMapping(value = "/usuarios")
+    @GetMapping("/usuario")
     public List<Usuario> listar() {
         return acoes.findAll();
     }
 
     //    cadastrar produtos
-    @PostMapping(value = "/usuarios")
-    public @ResponseBody Usuario cadastrar(@RequestBody Usuario usuario){
+    @PostMapping("/usuario")
+    public Usuario cadastrar(@RequestBody Usuario usuario){
         return acoes.save(usuario);
     }
 
     //filtrar produtos
-    @GetMapping(value = "/usuarios/{codigo}")
+    @GetMapping("/usuario/{codigo}")
     public Usuario filtrar(@PathVariable Integer codigo) {
         return acoes.findById(codigo)
                 .orElseThrow(()->new RuntimeException("Usuario não encontrado"));
     }
 
     //alterar produtos
-    @PutMapping(value = "/usuarios")
+    @PutMapping("/usuario")
     public Usuario alterar(@RequestBody Usuario user) {
         return acoes.save(user);
     }
 
     //deletar produtos
-    @DeleteMapping(value = "/usuarios/{codigo}")
+    @DeleteMapping("/usuario/{codigo}")
     public @ResponseBody ResponseDell deletar(@PathVariable Integer codigo) {
         ResponseDell response = new ResponseDell();
         try {
@@ -68,7 +71,7 @@ public class UsuarioController {
         return ResponseEntity.ok().body(msg);
     }
 
-    @GetMapping(value = "/usuarios/order/{codigo}")
+    @GetMapping("/usuario/order/{codigo}")
     public @ResponseBody List<Usuario> filterBy(@PathVariable String codigo) {
         List<Usuario> lista = this.listar();
         switch (codigo) {

@@ -26,11 +26,6 @@ public class Produto {
     @Setter
     private Double preco;
 
-    @Column(name = "SENHA", nullable = false)
-    @Getter
-    @Setter
-    private String senha;
-
     @Column(name = "ESTOQUE", nullable = false)
     @Getter
     @Setter
